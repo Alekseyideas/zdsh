@@ -82,4 +82,8 @@ p {
       background: none;
     }
   }
+
+  main {
+    min-height: calc(100vh - 230px);
+  }
 `;

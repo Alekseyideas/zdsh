@@ -2,8 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { IMethod } from '../store/techniques/types';
-import { ROUTE_PATH } from '../utils/consts';
-import { Button } from './ui';
+import { MAIN_BTNS, ROUTE_PATH } from '../utils/consts';
+import { Button, FontIcon } from './ui';
 
 interface AccordionItemLinksProps {
   title: string;
@@ -47,36 +47,36 @@ export const AccordionItemLinks: React.FC<AccordionItemLinksProps> = ({
 
                   <div className="d-flex align-items-center">
                     <Button
-                      title={<i className="bi bi-download" />}
+                      title={<FontIcon name={MAIN_BTNS[0].icon} />}
                       onClick={() => null}
                       isOutline
                       classes="me-2"
                       type="secondary"
-                      tooltip="Скачати"
+                      tooltip={MAIN_BTNS[0].title}
                     />
                     <Button
-                      title={<i className="bi bi-printer" />}
+                      title={<FontIcon name={MAIN_BTNS[1].icon} />}
                       onClick={() => null}
                       isOutline
                       classes="me-2"
                       type="secondary"
-                      tooltip="Роздрукувати"
+                      tooltip={MAIN_BTNS[1].title}
                     />
                     {isMy ? (
                       <Button
-                        title={<i className="bi bi-file-earmark-minus" />}
+                        title={<FontIcon name={MAIN_BTNS[2].icon} />}
                         onClick={() => null}
                         isOutline
                         type="secondary"
-                        tooltip="Видалити"
+                        tooltip={MAIN_BTNS[2].title}
                       />
                     ) : (
                       <Button
-                        title={<i className="bi bi-file-earmark-plus" />}
+                        title={<FontIcon name={MAIN_BTNS[3].icon} />}
                         onClick={() => null}
                         isOutline
                         type="secondary"
-                        tooltip="Копіювати"
+                        tooltip={MAIN_BTNS[3].title}
                       />
                     )}
                   </div>

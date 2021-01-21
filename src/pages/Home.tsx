@@ -9,8 +9,8 @@ interface HomeProps {}
 export const Home: React.FC<HomeProps> = () => {
   return (
     <MainWrapper>
-      <div className="container mt-5">
-        <WrapperTextS className="text-center">
+      <div className="container">
+        <WrapperTextS className="text-center pt-5">
           <h1>Навчальні прийоми: інтерактивна карта</h1>
           <p className="mt-4">
             Щоб переглянути прийом, оберіть навчальну технологію, якої він стосується. Наприклад,

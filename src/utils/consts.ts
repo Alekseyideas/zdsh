@@ -13,3 +13,22 @@ export const COLORS = {
   primary: '#FA4F2A',
   primaryHover: '#ecb213',
 };
+
+export const MAIN_BTNS = [
+  {
+    title: 'Скачати',
+    icon: 'bi-download',
+  },
+  {
+    title: 'Роздрукувати',
+    icon: 'bi-printer',
+  },
+  {
+    title: 'Копіювати',
+    icon: 'bi-file-earmark-plus',
+  },
+  {
+    title: 'Видалити',
+    icon: 'bi-file-earmark-minus',
+  },
+];

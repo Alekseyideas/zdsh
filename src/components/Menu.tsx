@@ -19,6 +19,9 @@ export const Menu: React.FC<MenuProps> = () => {
           <NavLink className="nav-link" to={ROUTE_PATH.myCards}>
             Моя картотека прийомів
           </NavLink>
+          <a className="nav-link" href="/" target="_blank">
+            Iнструкція
+          </a>
         </NavS>
       </div>
     </WrapperS>
