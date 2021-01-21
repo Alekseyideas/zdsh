@@ -64,19 +64,19 @@ export const AccordionItemLinks: React.FC<AccordionItemLinksProps> = ({
                     />
                     {isMy ? (
                       <Button
-                        title={<FontIcon name={MAIN_BTNS[2].icon} />}
-                        onClick={() => null}
-                        isOutline
-                        type="secondary"
-                        tooltip={MAIN_BTNS[2].title}
-                      />
-                    ) : (
-                      <Button
                         title={<FontIcon name={MAIN_BTNS[3].icon} />}
                         onClick={() => null}
                         isOutline
                         type="secondary"
                         tooltip={MAIN_BTNS[3].title}
+                      />
+                    ) : (
+                      <Button
+                        title={<FontIcon name={MAIN_BTNS[2].icon} />}
+                        onClick={() => null}
+                        isOutline
+                        type="secondary"
+                        tooltip={MAIN_BTNS[2].title}
                       />
                     )}
                   </div>

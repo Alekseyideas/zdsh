@@ -40,17 +40,22 @@ p {
 .btn-primary {
   background: ${COLORS.primary};
   border-color:${COLORS.primary};
-  box-shadow: none;
+  box-shadow: none !important;
   
   &:hover {
     background-color: ${COLORS.primaryHover};
     border-color: ${COLORS.primaryHover};
   }
-  &:active,
+
+
   &:focus {
     background-color: ${COLORS.primary};
     border-color: ${COLORS.primary};
     box-shadow: none;
+  }
+  &:active {
+    background-color: ${COLORS.primaryActive};
+    border-color: ${COLORS.primaryActive};
   }
 }
 
