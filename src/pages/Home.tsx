@@ -22,10 +22,14 @@ export const Home: React.FC<HomeProps> = () => {
           </p>
 
           <div className="mt-4">
-            <Link className="btn btn-primary me-4" to={ROUTE_PATH.techniques}>
+            <Link
+              className="btn btn-primary me-4"
+              to={ROUTE_PATH.techniques}
+              style={{ minWidth: '280px' }}
+            >
               Навчальні прийоми
             </Link>
-            <Link className="btn btn-primary" to={ROUTE_PATH.myCards}>
+            <Link className="btn btn-primary" to={ROUTE_PATH.myCards} style={{ minWidth: '280px' }}>
               Моя картотека прийомів
             </Link>
           </div>

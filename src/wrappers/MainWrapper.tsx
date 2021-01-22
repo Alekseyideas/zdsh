@@ -20,5 +20,5 @@ export const MainWrapper: React.FC<MainWrapperProps> = ({ children }) => {
 };
 
 const WrapperS = styled.div`
-  padding-top: 93px;
+  padding-top: 113px;
 `;

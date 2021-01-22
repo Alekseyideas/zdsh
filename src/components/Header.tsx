@@ -77,7 +77,7 @@ const WrapperS = styled.header`
   top: 0;
   left: 0;
   width: 100%;
-  padding: 5px 0;
+  padding: 15px 0;
   background: ${COLORS.main};
 `;
 const LogoS = styled.a`

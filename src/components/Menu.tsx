@@ -31,7 +31,7 @@ export const Menu: React.FC<MenuProps> = () => {
 const WrapperS = styled.div`
   position: fixed;
   z-index: 9;
-  top: 53px;
+  top: 73px;
   left: 0;
   width: 100%;
   background: #f7f7f7;
