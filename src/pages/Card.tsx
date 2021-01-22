@@ -1,11 +1,12 @@
 import { Base64 } from 'js-base64';
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { Alert } from '../components/Alerts';
 import { Spinner } from '../components/Spinner';
 import { Button, FontIcon } from '../components/ui';
 import { callApi } from '../utils/callApi';
-import { MAIN_BTNS } from '../utils/consts';
+import { MAIN_BTNS, ROUTE_PATH } from '../utils/consts';
 import { MainWrapper } from '../wrappers/MainWrapper';
 
 interface CardProps {}
@@ -20,6 +21,7 @@ export const Card: React.FC<CardProps> = () => {
   const [body, setBody] = React.useState('');
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState('');
+  const history = useHistory();
 
   React.useEffect(() => {
     getData();
@@ -53,13 +55,34 @@ export const Card: React.FC<CardProps> = () => {
   );
 
   if (!loading && !error) {
+    const iconT = (
+      <>
+        <FontIcon name="bi-arrow-left" /> <span>Повернутися до каталогу</span>
+      </>
+    );
     bodyHtml = (
       <>
+        <div className="d-flex mb-5" style={{ maxWidth: '900px' }}>
+          <Button
+            title={iconT}
+            onClick={() => history.push(ROUTE_PATH.techniques)}
+            classes="me-3"
+          />
+          <Button title={renderBtnText(IBtnNum.download)} onClick={() => null} classes="me-3" />
+          <Button title={renderBtnText(IBtnNum.print)} onClick={() => null} classes="me-3" />
+          <Button title={renderBtnText(IBtnNum.clone)} onClick={() => null} classes="me-3" />
+          {/* <Button title={renderBtnText(3)} onClick={() => null} classes="me-3" /> */}
+        </div>
         <div
           style={{ maxWidth: '900px' }}
           dangerouslySetInnerHTML={{ __html: Base64.decode(body) }}
         />
         <div className="d-flex mt-5">
+          <Button
+            title={iconT}
+            onClick={() => history.push(ROUTE_PATH.techniques)}
+            classes="me-3"
+          />
           <Button title={renderBtnText(IBtnNum.download)} onClick={() => null} classes="me-3" />
           <Button title={renderBtnText(IBtnNum.print)} onClick={() => null} classes="me-3" />
           <Button title={renderBtnText(IBtnNum.clone)} onClick={() => null} classes="me-3" />
@@ -94,5 +117,9 @@ const WrapperS = styled.div`
   p,
   h6 {
     margin-bottom: 20px;
+  }
+
+  .btn {
+    min-width: 280px;
   }
 `;

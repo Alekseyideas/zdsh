@@ -4,12 +4,13 @@ export const ROUTE_PATH = {
   myCards: '/my-cards',
   cards: '/cards',
   card: '/card',
+  instructions: '/instructions',
 };
 
 export const COLORS = {
   main: '#e20511',
   mainRgb: '226, 5, 17',
-  default: '#00000',
+  default: '#000',
   primary: '#FA4F2A',
   primaryHover: '#ecb213',
   primaryActive: '#bf3517',

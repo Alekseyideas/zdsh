@@ -19,9 +19,9 @@ export const Menu: React.FC<MenuProps> = () => {
           <NavLink className="nav-link" to={ROUTE_PATH.myCards}>
             Моя картотека прийомів
           </NavLink>
-          <a className="nav-link" href="/" target="_blank">
+          <NavLink className="nav-link" to={ROUTE_PATH.instructions}>
             Iнструкція
-          </a>
+          </NavLink>
         </NavS>
       </div>
     </WrapperS>
@@ -30,6 +30,7 @@ export const Menu: React.FC<MenuProps> = () => {
 
 const WrapperS = styled.div`
   position: fixed;
+  z-index: 9;
   top: 53px;
   left: 0;
   width: 100%;

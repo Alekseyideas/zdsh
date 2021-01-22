@@ -21,7 +21,7 @@ export const Accordion: React.FC<AccordionProps> = ({ data, isMy }) => {
     techniqies[0] &&
     techniqies.map((itm) => (
       <AccordionItemLinks
-        onClick={() => setActiveId(itm.id)}
+        onClick={() => (itm.id === activeId ? setActiveId(-1) : setActiveId(itm.id))}
         key={itm.id}
         title={itm.title}
         data={itm.methods}
