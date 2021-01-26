@@ -5,7 +5,7 @@ import { Crumbs, ICrumb } from '../components/Crumbs';
 import { Spinner } from '../components/Spinner';
 import { AppState } from '../store/applicationState';
 import { getTechniquesR } from '../store/techniques/actions';
-import { ROUTE_PATH } from '../utils/consts';
+import { MESSAGES, ROUTE_PATH } from '../utils/consts';
 import { MainWrapper } from '../wrappers/MainWrapper';
 
 interface LearningTechniquesProps {}
@@ -41,8 +41,16 @@ export const LearningTechniques: React.FC<LearningTechniquesProps> = () => {
     </div>
   );
 
-  if (Techniques.loaded && Techniques.data[0]) {
-    body = <Accordion data={Techniques.data} />;
+  if (Techniques.loaded && Techniques.error) {
+    body = <h5 style={{ color: 'red' }}>{MESSAGES.error}</h5>;
+  }
+
+  if (Techniques.loaded && Techniques.data?.all[0]) {
+    body = <Accordion data={Techniques.data.all} />;
+  }
+
+  if (Techniques.loaded && !Techniques.data?.all[0]) {
+    body = <h5>{MESSAGES.empty}</h5>;
   }
 
   return (

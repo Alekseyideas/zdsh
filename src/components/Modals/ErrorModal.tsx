@@ -1,12 +1,17 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from '../../store/applicationState';
+import { setErrorModal } from '../../store/modals/actions';
 import { Button } from '../ui';
 
 interface ErrorModalProps {}
 
 export const ErrorModal: React.FC<ErrorModalProps> = () => {
   const { Modals } = useSelector((state: AppState) => state);
+
+  const dispatch = useDispatch();
+
+  const closeModal = () => dispatch(setErrorModal({ isOpen: false, message: '' }));
 
   if (!Modals.errorModal.isOpen) return null;
 
@@ -21,13 +26,14 @@ export const ErrorModal: React.FC<ErrorModalProps> = () => {
               className="btn-close"
               data-bs-dismiss="modal"
               aria-label="Close"
+              onClick={closeModal}
             ></button>
           </div>
           <div className="modal-body">
             <p>{Modals.errorModal.message}</p>
           </div>
           <div className="modal-footer">
-            <Button title="Закрити" onClick={() => null} />
+            <Button title="Закрити" onClick={closeModal} />
           </div>
         </div>
       </div>

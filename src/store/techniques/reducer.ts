@@ -2,7 +2,10 @@ import { Reducer } from 'redux';
 import { ActionTypes, ITechniquesState } from './types';
 
 const initialState: ITechniquesState = {
-  data: [],
+  data: {
+    all: [],
+    my: [],
+  },
   pending: false,
   loaded: false,
   error: false,

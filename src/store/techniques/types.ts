@@ -4,13 +4,16 @@ export interface IMethod {
 }
 
 export interface ITechniqe {
-  title: string;
-  id: number;
-  methods: IMethod[];
+  all: {
+    title: string;
+    id: number;
+    methods: IMethod[];
+  }[];
+  my: number[];
 }
 
 export interface ITechniquesState {
-  data: ITechniqe[];
+  data: ITechniqe;
   pending: boolean;
   loaded: boolean;
   error: boolean;

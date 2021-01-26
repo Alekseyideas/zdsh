@@ -5,6 +5,7 @@ import { Crumbs, ICrumb } from '../components/Crumbs';
 import { Spinner } from '../components/Spinner';
 import { AppState } from '../store/applicationState';
 import { getTechniquesR } from '../store/techniques/actions';
+import { ITechniqe } from '../store/techniques/types';
 import { ROUTE_PATH } from '../utils/consts';
 import { MainWrapper } from '../wrappers/MainWrapper';
 
@@ -12,6 +13,7 @@ interface MyCardsProps {}
 
 export const MyCards: React.FC<MyCardsProps> = () => {
   const { Techniques } = useSelector((state: AppState) => state);
+  const [myTech, setMyTech] = React.useState<ITechniqe['all']>([]);
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -35,14 +37,30 @@ export const MyCards: React.FC<MyCardsProps> = () => {
     },
   ];
 
+  React.useEffect(() => {
+    function getMyTechniques() {
+      console.log(Techniques.data);
+
+      return [];
+    }
+
+    if (Techniques.data && Techniques.data.my[0]) {
+      const techniques = getMyTechniques();
+    }
+  }, [Techniques.data]);
+
   let body = (
     <div className="mt-5 d-flex justify-content-center">
       <Spinner />
     </div>
   );
 
-  if (Techniques.loaded && Techniques.data[0]) {
-    body = <Accordion data={Techniques.data.slice(2, 6)} isMy />;
+  if (Techniques.loaded && myTech && myTech[0]) {
+    body = <Accordion data={myTech} isMy />;
+  }
+
+  if (Techniques.loaded && !myTech[0]) {
+    body = <p>Ви ще нічого не додали</p>;
   }
 
   return (

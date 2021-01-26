@@ -23,8 +23,8 @@ export async function callApi(
     console.log('Error Api Call', e.response);
     console.log('Error', e);
     let error = e;
-    // if (e.response && e.response.statusText) error = 'url: ' + path + ' - ' + e.response.statusText;
-    if (e.response && e.response.data) error = e.response.data;
+    if (e.response && e.response.statusText) error = 'url: ' + path + ' - ' + e.response.statusText;
+    else if (e.response && e.response.data) error = e.response.data;
     throw error;
   }
 }

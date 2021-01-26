@@ -3,7 +3,7 @@ import { ITechniqe } from '../store/techniques/types';
 import { AccordionItemLinks } from './AccordionItemLinks';
 
 interface AccordionProps {
-  data: ITechniqe[];
+  data: ITechniqe['all'];
   isMy?: boolean;
 }
 
@@ -16,7 +16,7 @@ export const Accordion: React.FC<AccordionProps> = ({ data, isMy }) => {
   const leftCol = data.slice(0, leftColItmsCount);
   const rightCol = data.slice(leftColItmsCount, data.length);
 
-  const renderItms = (techniqies: ITechniqe[]) =>
+  const renderItms = (techniqies: ITechniqe['all']) =>
     techniqies &&
     techniqies[0] &&
     techniqies.map((itm) => (

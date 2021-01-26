@@ -34,3 +34,8 @@ export const MAIN_BTNS = [
     icon: 'bi-file-earmark-minus',
   },
 ];
+
+export const MESSAGES = {
+  error: 'Помилка, спробуйте пiзнiше, або перезавантажте сторiнку',
+  empty: 'Нема даних',
+};

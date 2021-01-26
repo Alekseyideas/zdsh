@@ -1,5 +1,6 @@
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import { callApi } from '../../utils/callApi';
+import { setErrorModal } from '../modals/actions';
 import * as actions from './actions';
 import { ActionTypes } from './types';
 
@@ -9,11 +10,8 @@ function* getTechniques() {
     yield put(actions.getTechniquesS({ data }));
   } catch (e) {
     const message = JSON.stringify(e);
-    console.log(message, 'message');
+    yield put(setErrorModal({ message, isOpen: true }));
     yield put(actions.getTechniquesE());
-
-    // yield put(Action.unZipE(e));
-    // yield put(openErrorModal({ message: message === '{}' ? `${e}` : message }));
   } finally {
   }
 }
