@@ -1,27 +1,68 @@
 import { Base64 } from 'js-base64';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { Alert } from '../components/Alerts';
 import { Spinner } from '../components/Spinner';
 import { Button, FontIcon } from '../components/ui';
+import { AppState } from '../store/applicationState';
+import { addToMyR, getTechniquesR, removeFromMyR } from '../store/techniques/actions';
 import { callApi } from '../utils/callApi';
 import { MAIN_BTNS, ROUTE_PATH } from '../utils/consts';
+import { isInMy } from '../utils/isMy';
 import { MainWrapper } from '../wrappers/MainWrapper';
+import { Crumbs, ICrumb } from './Crumbs';
 
-interface CardProps {}
+interface RouteParams {
+  id: string;
+}
+
+interface CardProps {
+  isMy?: boolean;
+}
 
 enum IBtnNum {
   'download' = 0,
   'print' = 1,
-  'clone' = 3,
-  'remove' = 4,
+  'clone' = 2,
+  'remove' = 3,
 }
-export const Card: React.FC<CardProps> = () => {
+export const Card: React.FC<CardProps> = ({ isMy }) => {
+  const { Techniques } = useSelector((store: AppState) => store);
   const [body, setBody] = React.useState('');
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState('');
+  const dispatch = useDispatch();
   const history = useHistory();
+  const { id } = useParams<RouteParams>();
+  const backPath = ROUTE_PATH[isMy ? 'myCards' : 'techniques'];
+  const crumbs: ICrumb[] = [
+    {
+      title: 'Головна',
+      isLink: true,
+      path: ROUTE_PATH.home,
+      id: 1,
+    },
+    {
+      title: isMy ? 'Моя картотека прийомів' : 'Навчальні прийоми',
+      isLink: true,
+      path: backPath,
+      id: 2,
+    },
+    {
+      title: id,
+      isLink: false,
+      active: true,
+      id: 3,
+    },
+  ];
+
+  const add = () => dispatch(addToMyR({ id: Number(id) }));
+  const remove = () => dispatch(removeFromMyR({ id: Number(id) }));
+  const callTechniques = React.useCallback(() => {
+    dispatch(getTechniquesR());
+  }, [dispatch]);
 
   React.useEffect(() => {
     getData();
@@ -37,6 +78,13 @@ export const Card: React.FC<CardProps> = () => {
       }
     }
   }, []);
+
+  React.useEffect(() => {
+    if (!Techniques.data.all[0]) {
+      console.log(111);
+      callTechniques();
+    }
+  }, [Techniques.data.all, callTechniques]);
 
   const renderBtnText = (btnNum: IBtnNum) => (
     <>
@@ -54,23 +102,26 @@ export const Card: React.FC<CardProps> = () => {
     </div>
   );
 
-  if (!loading && !error) {
+  if (Techniques.loaded && !loading && !error) {
     const iconT = (
       <>
         <FontIcon name="bi-arrow-left" /> <span>Повернутися до каталогу</span>
       </>
     );
+
+    const isIn = isInMy(Number(id), !!isMy, Techniques.data.my);
     bodyHtml = (
       <>
         <div className="d-flex mb-5" style={{ maxWidth: '900px' }}>
-          <Button
-            title={iconT}
-            onClick={() => history.push(ROUTE_PATH.techniques)}
-            classes="me-3"
-          />
+          <Button title={iconT} onClick={() => history.push(backPath)} classes="me-3" />
           <Button title={renderBtnText(IBtnNum.download)} onClick={() => null} classes="me-3" />
           <Button title={renderBtnText(IBtnNum.print)} onClick={() => null} classes="me-3" />
-          <Button title={renderBtnText(IBtnNum.clone)} onClick={() => null} classes="me-3" />
+          {isIn ? (
+            <Button title={renderBtnText(IBtnNum.remove)} onClick={remove} classes="me-3" />
+          ) : (
+            <Button title={renderBtnText(IBtnNum.clone)} onClick={add} classes="me-3" />
+          )}
+
           {/* <Button title={renderBtnText(3)} onClick={() => null} classes="me-3" /> */}
         </div>
         <div
@@ -85,14 +136,18 @@ export const Card: React.FC<CardProps> = () => {
           />
           <Button title={renderBtnText(IBtnNum.download)} onClick={() => null} classes="me-3" />
           <Button title={renderBtnText(IBtnNum.print)} onClick={() => null} classes="me-3" />
-          <Button title={renderBtnText(IBtnNum.clone)} onClick={() => null} classes="me-3" />
+          {isIn ? (
+            <Button title={renderBtnText(IBtnNum.remove)} onClick={remove} classes="me-3" />
+          ) : (
+            <Button title={renderBtnText(IBtnNum.clone)} onClick={add} classes="me-3" />
+          )}
           {/* <Button title={renderBtnText(3)} onClick={() => null} classes="me-3" /> */}
         </div>
       </>
     );
   }
 
-  if (!loading && error) {
+  if (Techniques.loaded && !loading && error) {
     bodyHtml = (
       <div style={{ maxWidth: '900px' }}>
         <Alert text={error} />
@@ -101,7 +156,10 @@ export const Card: React.FC<CardProps> = () => {
   }
   return (
     <MainWrapper>
-      <WrapperS className="container pt-5">{bodyHtml}</WrapperS>
+      <div className="container">
+        <Crumbs data={crumbs} />
+        <WrapperS className="container pt-5">{bodyHtml}</WrapperS>
+      </div>
     </MainWrapper>
   );
 };

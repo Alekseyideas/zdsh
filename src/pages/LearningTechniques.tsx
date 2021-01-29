@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Accordion } from '../components/Accordion';
 import { Crumbs, ICrumb } from '../components/Crumbs';
+import { SuccesClone } from '../components/Modals';
 import { Spinner } from '../components/Spinner';
 import { AppState } from '../store/applicationState';
 import { getTechniquesR } from '../store/techniques/actions';
@@ -11,7 +12,7 @@ import { MainWrapper } from '../wrappers/MainWrapper';
 interface LearningTechniquesProps {}
 
 export const LearningTechniques: React.FC<LearningTechniquesProps> = () => {
-  const { Techniques } = useSelector((state: AppState) => state);
+  const { Techniques, Modals } = useSelector((state: AppState) => state);
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -55,11 +56,16 @@ export const LearningTechniques: React.FC<LearningTechniquesProps> = () => {
 
   return (
     <MainWrapper>
-      <div className="container">
-        <Crumbs data={crumbs} />
-        <h1 className="mt-4 mb-4">Навчальні прийоми</h1>
-        {body}
-      </div>
+      <>
+        <div className="container">
+          <Crumbs data={crumbs} />
+          <h1 className="mt-4 mb-4">Навчальні прийоми</h1>
+          {body}
+        </div>
+        {Modals.successCloneModal.isOpen ? (
+          <SuccesClone title={'Успішно'} desc="Прийом доданий до вашої картотеки" />
+        ) : null}
+      </>
     </MainWrapper>
   );
 };

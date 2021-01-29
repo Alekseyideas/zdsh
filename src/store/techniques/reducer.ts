@@ -27,6 +27,28 @@ export const reducer: Reducer<ITechniquesState> = (state = initialState, action)
         loaded: true,
         error: false,
       };
+    case ActionTypes.REMOVE_FROM_MY_S:
+      return {
+        data: {
+          all: [...state.data.all],
+          my: state.data.my.filter((id) => id !== action.payload.id),
+        },
+        pending: false,
+        loaded: true,
+        error: false,
+      };
+    case ActionTypes.ADD_TO_MY_S:
+      return {
+        data: {
+          all: [...state.data.all],
+          my: state.data.my.concat(action.payload.id),
+        },
+        pending: false,
+        loaded: true,
+        error: false,
+      };
+    case ActionTypes.REMOVE_FROM_MY_E:
+    case ActionTypes.ADD_TO_MY_E:
     case ActionTypes.GET_TECHNIQUES_E:
       return {
         ...state,

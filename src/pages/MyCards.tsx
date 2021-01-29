@@ -7,6 +7,7 @@ import { AppState } from '../store/applicationState';
 import { getTechniquesR } from '../store/techniques/actions';
 import { ITechniqe } from '../store/techniques/types';
 import { ROUTE_PATH } from '../utils/consts';
+import { getMyTechniques } from '../utils/getMyTechniques';
 import { MainWrapper } from '../wrappers/MainWrapper';
 
 interface MyCardsProps {}
@@ -38,14 +39,12 @@ export const MyCards: React.FC<MyCardsProps> = () => {
   ];
 
   React.useEffect(() => {
-    function getMyTechniques() {
-      console.log(Techniques.data);
-
-      return [];
-    }
-
     if (Techniques.data && Techniques.data.my[0]) {
-      const techniques = getMyTechniques();
+      const { all, my } = Techniques.data;
+      const techniques = getMyTechniques(all || [], my || []);
+      setMyTech(techniques);
+    } else {
+      setMyTech([]);
     }
   }, [Techniques.data]);
 

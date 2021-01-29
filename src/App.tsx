@@ -33,7 +33,8 @@ function App() {
           <Route exact path={ROUTE_PATH.home} component={Pages.Home} />
           <Route exact path={ROUTE_PATH.techniques} component={Pages.LearningTechniques} />
           <Route exact path={ROUTE_PATH.myCards} component={Pages.MyCards} />
-          <Route exact path={`${ROUTE_PATH.card}/:id`} component={Pages.Card} />
+          <Route exact path={`${ROUTE_PATH.myCards}/:id`} component={Pages.MyCard} />
+          <Route exact path={`${ROUTE_PATH.techniques}/:id`} component={Pages.DeafultCard} />
           <Route exact path={`${ROUTE_PATH.instructions}`} component={Pages.Instructions} />
           <Route path="*" component={Pages.Page404} />
         </Switch>

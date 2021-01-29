@@ -1,8 +1,12 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { AppState } from '../store/applicationState';
+import { addToMyR, removeFromMyR } from '../store/techniques/actions';
 import { IMethod } from '../store/techniques/types';
 import { MAIN_BTNS, ROUTE_PATH } from '../utils/consts';
+import { isInMy } from '../utils/isMy';
 import { Button, FontIcon } from './ui';
 
 interface AccordionItemLinksProps {
@@ -20,6 +24,10 @@ export const AccordionItemLinks: React.FC<AccordionItemLinksProps> = ({
   onClick,
   isMy,
 }) => {
+  const { Techniques } = useSelector((store: AppState) => store);
+  const dispatch = useDispatch();
+  const remove = (id: IMethod['id']) => dispatch(removeFromMyR({ id }));
+  const add = (id: IMethod['id']) => dispatch(addToMyR({ id }));
   return (
     <div className="accordion-item">
       <h2 className="accordion-header">
@@ -41,7 +49,10 @@ export const AccordionItemLinks: React.FC<AccordionItemLinksProps> = ({
                   className="list-group-item d-flex justify-content-between align-items-center"
                   key={itm.id}
                 >
-                  <Link to={`${ROUTE_PATH.card}/${itm.id}`} className="d-block">
+                  <Link
+                    to={`${isMy ? ROUTE_PATH.myCards : ROUTE_PATH.techniques}/${itm.id}`}
+                    className="d-block"
+                  >
                     {itm.title}
                   </Link>
 
@@ -62,10 +73,10 @@ export const AccordionItemLinks: React.FC<AccordionItemLinksProps> = ({
                       type="secondary"
                       tooltip={MAIN_BTNS[1].title}
                     />
-                    {isMy ? (
+                    {isInMy(itm.id, !!isMy, Techniques.data.my) ? (
                       <Button
                         title={<FontIcon name={MAIN_BTNS[3].icon} />}
-                        onClick={() => null}
+                        onClick={() => remove(itm.id)}
                         isOutline
                         type="secondary"
                         tooltip={MAIN_BTNS[3].title}
@@ -73,7 +84,7 @@ export const AccordionItemLinks: React.FC<AccordionItemLinksProps> = ({
                     ) : (
                       <Button
                         title={<FontIcon name={MAIN_BTNS[2].icon} />}
-                        onClick={() => null}
+                        onClick={() => add(itm.id)}
                         isOutline
                         type="secondary"
                         tooltip={MAIN_BTNS[2].title}
