@@ -7,8 +7,8 @@ export async function callApi(
   data?: Object | null
 ) {
   try {
-    let token = '';
     let url = API_URL;
+    const token =  localStorage.getItem('token');
 
     const res = await axios.request({
       method,

@@ -8,6 +8,7 @@ import { IMethod } from '../store/techniques/types';
 import { MAIN_BTNS, ROUTE_PATH } from '../utils/consts';
 import { isInMy } from '../utils/isMy';
 import { Button, FontIcon } from './ui';
+import { ButtonLink } from './ui/Buttons';
 
 interface AccordionItemLinksProps {
   title: string;
@@ -57,17 +58,17 @@ export const AccordionItemLinks: React.FC<AccordionItemLinksProps> = ({
                   </Link>
 
                   <div className="d-flex align-items-center">
-                    <Button
+                    <ButtonLink
                       title={<FontIcon name={MAIN_BTNS[0].icon} />}
-                      onClick={() => null}
+                      href="/"
                       isOutline
                       classes="me-2"
                       type="secondary"
                       tooltip={MAIN_BTNS[0].title}
                     />
-                    <Button
+                    <ButtonLink
                       title={<FontIcon name={MAIN_BTNS[1].icon} />}
-                      onClick={() => null}
+                      href="/"
                       isOutline
                       classes="me-2"
                       type="secondary"
@@ -101,11 +102,13 @@ export const AccordionItemLinks: React.FC<AccordionItemLinksProps> = ({
 };
 
 const LiS = styled.li`
+  a.btn,
   button {
     visibility: hidden;
   }
 
   &:hover {
+    a.btn,
     button {
       visibility: visible;
     }

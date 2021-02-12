@@ -6,7 +6,8 @@ import { ActionTypes } from './types';
 
 function* getTechniques() {
   try {
-    const data = yield call(callApi, 'get', '../data/techniques.json');
+    const data = yield call(callApi, 'get', '/catalog/');
+    //console.log(data);
     yield put(actions.getTechniquesS({ data }));
   } catch (e) {
     const message = JSON.stringify(e);
@@ -18,8 +19,9 @@ function* getTechniques() {
 
 function* removeFromMy(action: ReturnType<typeof actions.removeFromMyR>) {
   try {
+    const data = yield call(callApi, 'get', `/deletecard/${action.payload.id}`);
+    console.log(data);
     yield put(actions.removeFromMyS(action.payload));
-    // yield call(callApi, 'delete', '../data/techniques.json');
   } catch (e) {
     const message = JSON.stringify(e);
     yield put(setErrorModal({ message, isOpen: true }));
@@ -29,10 +31,10 @@ function* removeFromMy(action: ReturnType<typeof actions.removeFromMyR>) {
 }
 function* addToMy(action: ReturnType<typeof actions.addToMyR>) {
   try {
+    const data = yield call(callApi, 'get', `/addcard/${action.payload.id}`);
+    console.log(data);
     yield put(actions.addToMyS(action.payload));
     yield put(setSuccessCloneModal({ isOpen: true }));
-
-    // yield call(callApi, 'delete', '../data/techniques.json');
   } catch (e) {
     const message = JSON.stringify(e);
     yield put(setErrorModal({ message, isOpen: true }));

@@ -3,8 +3,9 @@ import styled from 'styled-components';
 
 interface ButtonsProps {
   title: string | React.ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
   classes?: string;
+  href?: string;
   type?:
     | 'primary'
     | 'secondary'
@@ -42,6 +43,27 @@ export const Button: React.FC<ButtonsProps> = ({
     </BtnS>
   );
 };
+export const ButtonLink: React.FC<ButtonsProps> = ({
+  type = 'primary',
+  title,
+  isOutline,
+  href,
+  classes,
+  tooltip,
+}) => {
+  return (
+    <BtnLinkS
+      type="button"
+      target="_blank"
+      className={`btn btn-${isOutline ? 'outline-' : ''}${type}${classes ? ` ${classes}` : ''}`}
+      href={href}
+      // {...d}
+    >
+      {title}
+      {tooltip ? <TooltipS>{tooltip}</TooltipS> : null}
+    </BtnLinkS>
+  );
+};
 
 const TooltipS = styled.span`
   visibility: hidden;
@@ -63,6 +85,15 @@ const TooltipS = styled.span`
 `;
 
 const BtnS = styled.button`
+  position: relative;
+
+  &:hover {
+    ${TooltipS} {
+      visibility: visible;
+    }
+  }
+`;
+const BtnLinkS = styled.a`
   position: relative;
 
   &:hover {

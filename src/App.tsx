@@ -19,19 +19,21 @@ function App() {
         await localStorage.clear();
         generateID2(async (token: string) => {
           if (token) {
-            // const res = await axios.request({
-            //   method: 'GET',
-            //   headers: {
-            //     'X-ACCESS-TOKEN': token,
-            //   },
-            //   url: `${http}://service.mcfr.ua/Plan/api/`,
-            // });
+            /*
+             const res = await axios.request({
+               method: 'GET',
+               headers: {
+                 'X-ACCESS-TOKEN': token,
+               },
+               url: `${http}://service.mcfr.ua/Plan/api/`,
+             });
 
-            // if (res.data.error) {
-            //   dispatch(setUser({ isDemo: false, isAuth: false, token: '', error: res.data.error }));
-            // } else {
-            //   dispatch(setUser({ isDemo: !!res.data.isDemo, isAuth: true, token, error: '' }));
-            // }
+             if (res.data.error) {
+               dispatch(setUser({ isDemo: false, isAuth: false, token: '', error: res.data.error }));
+             } else {
+               dispatch(setUser({ isDemo: !!res.data.isDemo, isAuth: true, token, error: '' }));
+              }
+            */
             dispatch(setUser({ isDemo: false, isAuth: true, token, error: '' }));
             setId2(true);
           } else {

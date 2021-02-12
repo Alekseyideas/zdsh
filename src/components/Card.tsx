@@ -8,11 +8,13 @@ import { Spinner } from '../components/Spinner';
 import { Button, FontIcon } from '../components/ui';
 import { AppState } from '../store/applicationState';
 import { addToMyR, getTechniquesR, removeFromMyR } from '../store/techniques/actions';
+import { IMethod } from '../store/techniques/types';
 import { callApi } from '../utils/callApi';
 import { MAIN_BTNS, ROUTE_PATH } from '../utils/consts';
 import { isInMy } from '../utils/isMy';
 import { MainWrapper } from '../wrappers/MainWrapper';
 import { Crumbs, ICrumb } from './Crumbs';
+import { ButtonLink } from './ui/Buttons';
 
 interface RouteParams {
   id: string;
@@ -37,7 +39,7 @@ export const Card: React.FC<CardProps> = ({ isMy }) => {
   const history = useHistory();
   const { id } = useParams<RouteParams>();
   const backPath = ROUTE_PATH[isMy ? 'myCards' : 'techniques'];
-  const crumbs: ICrumb[] = [
+  const [crumbs, setCrumbs] = React.useState<ICrumb[]>([
     {
       title: 'Головна',
       isLink: true,
@@ -50,13 +52,7 @@ export const Card: React.FC<CardProps> = ({ isMy }) => {
       path: backPath,
       id: 2,
     },
-    {
-      title: id,
-      isLink: false,
-      active: true,
-      id: 3,
-    },
-  ];
+  ]);
 
   const add = () => dispatch(addToMyR({ id: Number(id) }));
   const remove = () => dispatch(removeFromMyR({ id: Number(id) }));
@@ -68,7 +64,8 @@ export const Card: React.FC<CardProps> = ({ isMy }) => {
     getData();
     async function getData() {
       try {
-        const data = await callApi('get', './data/card-1.json');
+        const data = await callApi('get', `/items/${id}`);
+        console.log(data);
         setBody(data.html);
       } catch (e) {
         const message = JSON.stringify(e);
@@ -77,14 +74,38 @@ export const Card: React.FC<CardProps> = ({ isMy }) => {
         setLoading(false);
       }
     }
-  }, []);
+  }, [id]);
 
   React.useEffect(() => {
     if (!Techniques.data.all[0]) {
-      console.log(111);
       callTechniques();
     }
-  }, [Techniques.data.all, callTechniques]);
+  }, [Techniques.data.all, callTechniques, id]);
+  React.useEffect(() => {
+    if (Techniques.data.all[0]) {
+      let methods: IMethod | null = null;
+      Techniques.data.all.forEach((t) => {
+        if (!methods && t.methods && t.methods[0]) {
+          t.methods.forEach((m) => {
+            if (String(m.id) === String(id)) {
+              methods = m;
+            }
+          });
+        }
+      });
+      if (methods)
+        setCrumbs((oldC) => [
+          oldC[0],
+          oldC[1],
+          {
+            title: methods?.title || '',
+            isLink: false,
+            active: true,
+            id: 3,
+          },
+        ]);
+    }
+  }, [Techniques.data.all, id]);
 
   const renderBtnText = (btnNum: IBtnNum) => (
     <>
@@ -114,8 +135,8 @@ export const Card: React.FC<CardProps> = ({ isMy }) => {
       <>
         <div className="d-flex mb-5" style={{ maxWidth: '900px' }}>
           <Button title={iconT} onClick={() => history.push(backPath)} classes="me-3" />
-          <Button title={renderBtnText(IBtnNum.download)} onClick={() => null} classes="me-3" />
-          <Button title={renderBtnText(IBtnNum.print)} onClick={() => null} classes="me-3" />
+          <ButtonLink title={renderBtnText(IBtnNum.download)} href="/" classes="me-3" />
+          <ButtonLink title={renderBtnText(IBtnNum.print)} href="/" classes="me-3" />
           {isIn ? (
             <Button title={renderBtnText(IBtnNum.remove)} onClick={remove} classes="me-3" />
           ) : (
@@ -134,8 +155,8 @@ export const Card: React.FC<CardProps> = ({ isMy }) => {
             onClick={() => history.push(ROUTE_PATH.techniques)}
             classes="me-3"
           />
-          <Button title={renderBtnText(IBtnNum.download)} onClick={() => null} classes="me-3" />
-          <Button title={renderBtnText(IBtnNum.print)} onClick={() => null} classes="me-3" />
+          <ButtonLink title={renderBtnText(IBtnNum.download)} href="/" classes="me-3" />
+          <ButtonLink title={renderBtnText(IBtnNum.print)} href="/" classes="me-3" />
           {isIn ? (
             <Button title={renderBtnText(IBtnNum.remove)} onClick={remove} classes="me-3" />
           ) : (

@@ -14,7 +14,7 @@ const initialState: ITechniquesState = {
 export const reducer: Reducer<ITechniquesState> = (state = initialState, action) => {
   switch (action.type) {
     case ActionTypes.GET_TECHNIQUES_R:
-      return {
+      return { 
         ...state,
         pending: true,
         loaded: false,
