@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { setSuccessCloneModal } from '../../store/modals/actions';
+import { setSuccessRemoveModal } from '../../store/modals/actions';
 
 interface SuccesCloneProps {
   title: string;
@@ -16,7 +16,7 @@ export const SuccesDelete: React.FC<SuccesCloneProps> = ({
   const [classActive, setClassActive] = React.useState('');
   const dispatch = useDispatch();
   const closeModal = () => {
-    dispatch(setSuccessCloneModal({ isOpen: false }));
+    dispatch(setSuccessRemoveModal({ isOpen: false }));
     closeHandler();
   };
 
