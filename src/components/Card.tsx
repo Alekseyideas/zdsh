@@ -33,6 +33,7 @@ enum IBtnNum {
 export const Card: React.FC<CardProps> = ({ isMy }) => {
   const { Techniques } = useSelector((store: AppState) => store);
   const [body, setBody] = React.useState('');
+  const [uri, setUri] = React.useState('');
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState('');
   const dispatch = useDispatch();
@@ -69,6 +70,7 @@ export const Card: React.FC<CardProps> = ({ isMy }) => {
         const data = await callApi('get', `/items/${id}`);
         console.log(data);
         setBody(data.html);
+        setUri(data.url);
       } catch (e) {
         const message = JSON.stringify(e);
         setError(message);
@@ -126,6 +128,13 @@ export const Card: React.FC<CardProps> = ({ isMy }) => {
     </div>
   );
 
+  const renderDelBtn = () => {
+    if (isMy) {
+      return <Button title={renderBtnText(IBtnNum.remove)} onClick={remove} classes="me-3" />;
+    }
+    return null;
+  };
+
   if (Techniques.loaded && !loading && !error) {
     const iconT = (
       <>
@@ -139,10 +148,14 @@ export const Card: React.FC<CardProps> = ({ isMy }) => {
       <>
         <div className="d-flex mb-5" style={{ maxWidth: '900px' }}>
           <Button title={iconT} onClick={() => history.push(backPath)} classes="me-3" />
-          <ButtonLink title={renderBtnText(IBtnNum.download)} href="/" classes="me-3" />
-          <ButtonLink title={renderBtnText(IBtnNum.print)} href="/" classes="me-3" />
+          {uri ? (
+            <>
+              <ButtonLink title={renderBtnText(IBtnNum.download)} href={uri} classes="me-3" />
+              <ButtonLink title={renderBtnText(IBtnNum.print)} href={uri} classes="me-3" />
+            </>
+          ) : null}
           {isIn ? (
-            <Button title={renderBtnText(IBtnNum.remove)} onClick={remove} classes="me-3" />
+            renderDelBtn()
           ) : (
             <Button title={renderBtnText(IBtnNum.clone)} onClick={add} classes="me-3" />
           )}
@@ -159,10 +172,14 @@ export const Card: React.FC<CardProps> = ({ isMy }) => {
             onClick={() => history.push(ROUTE_PATH.techniques)}
             classes="me-3"
           />
-          <ButtonLink title={renderBtnText(IBtnNum.download)} href="/" classes="me-3" />
-          <ButtonLink title={renderBtnText(IBtnNum.print)} href="/" classes="me-3" />
+          {uri ? (
+            <>
+              <ButtonLink title={renderBtnText(IBtnNum.download)} href={uri} classes="me-3" />
+              <ButtonLink title={renderBtnText(IBtnNum.print)} href={uri} classes="me-3" />
+            </>
+          ) : null}
           {isIn ? (
-            <Button title={renderBtnText(IBtnNum.remove)} onClick={remove} classes="me-3" />
+            renderDelBtn()
           ) : (
             <Button title={renderBtnText(IBtnNum.clone)} onClick={add} classes="me-3" />
           )}
