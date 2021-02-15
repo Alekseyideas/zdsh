@@ -29,6 +29,19 @@ export const AccordionItemLinks: React.FC<AccordionItemLinksProps> = ({
   const dispatch = useDispatch();
   const remove = (id: IMethod['id']) => dispatch(removeFromMyR({ id }));
   const add = (id: IMethod['id']) => dispatch(addToMyR({ id }));
+
+  const renderRemoveBtn = (id: number) => {
+    if (!isMy) return null;
+    return (
+      <Button
+        title={<FontIcon name={MAIN_BTNS[3].icon} />}
+        onClick={() => remove(id)}
+        isOutline
+        type="secondary"
+        tooltip={MAIN_BTNS[3].title}
+      />
+    );
+  };
   return (
     <div className="accordion-item">
       <h2 className="accordion-header">
@@ -58,30 +71,29 @@ export const AccordionItemLinks: React.FC<AccordionItemLinksProps> = ({
                   </Link>
 
                   <div className="d-flex align-items-center">
-                    <ButtonLink
-                      title={<FontIcon name={MAIN_BTNS[0].icon} />}
-                      href="/"
-                      isOutline
-                      classes="me-2"
-                      type="secondary"
-                      tooltip={MAIN_BTNS[0].title}
-                    />
-                    <ButtonLink
-                      title={<FontIcon name={MAIN_BTNS[1].icon} />}
-                      href="/"
-                      isOutline
-                      classes="me-2"
-                      type="secondary"
-                      tooltip={MAIN_BTNS[1].title}
-                    />
+                    {itm.url ? (
+                      <>
+                        <ButtonLink
+                          title={<FontIcon name={MAIN_BTNS[0].icon} />}
+                          href={itm.url}
+                          isOutline
+                          classes="me-2"
+                          type="secondary"
+                          tooltip={MAIN_BTNS[0].title}
+                        />
+                        <ButtonLink
+                          title={<FontIcon name={MAIN_BTNS[1].icon} />}
+                          href={itm.url}
+                          isOutline
+                          classes="me-2"
+                          type="secondary"
+                          tooltip={MAIN_BTNS[1].title}
+                        />
+                      </>
+                    ) : null}
+
                     {isInMy(itm.id, !!isMy, Techniques.data.my) ? (
-                      <Button
-                        title={<FontIcon name={MAIN_BTNS[3].icon} />}
-                        onClick={() => remove(itm.id)}
-                        isOutline
-                        type="secondary"
-                        tooltip={MAIN_BTNS[3].title}
-                      />
+                      renderRemoveBtn(itm.id)
                     ) : (
                       <Button
                         title={<FontIcon name={MAIN_BTNS[2].icon} />}

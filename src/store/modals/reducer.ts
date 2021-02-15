@@ -10,6 +10,10 @@ const initialState: IModalsState = {
     isOpen: false,
     message: '',
   },
+  successRemoveModal: {
+    message: '',
+    isOpen: false,
+  },
 };
 
 export const reducer: Reducer<IModalsState> = (state = initialState, action) => {
@@ -26,6 +30,14 @@ export const reducer: Reducer<IModalsState> = (state = initialState, action) => 
       return {
         ...state,
         successCloneModal: {
+          isOpen: action.payload.isOpen,
+          message: '',
+        },
+      };
+    case ActionTypes.SET_SUCCESS_REMOVE_MODAL:
+      return {
+        ...state,
+        successRemoveModal: {
           isOpen: action.payload.isOpen,
           message: '',
         },

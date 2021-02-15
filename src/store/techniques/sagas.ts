@@ -1,6 +1,6 @@
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import { callApi } from '../../utils/callApi';
-import { setErrorModal, setSuccessCloneModal } from '../modals/actions';
+import { setErrorModal, setSuccessCloneModal, setSuccessRemoveModal } from '../modals/actions';
 import * as actions from './actions';
 import { ActionTypes } from './types';
 
@@ -19,8 +19,8 @@ function* getTechniques() {
 
 function* removeFromMy(action: ReturnType<typeof actions.removeFromMyR>) {
   try {
-    const data = yield call(callApi, 'get', `/deletecard/${action.payload.id}`);
-    console.log(data);
+    yield call(callApi, 'get', `/deletecard/${action.payload.id}`);
+    yield put(setSuccessRemoveModal({ isOpen: true }));
     yield put(actions.removeFromMyS(action.payload));
   } catch (e) {
     const message = JSON.stringify(e);

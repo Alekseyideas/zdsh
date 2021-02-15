@@ -10,3 +10,10 @@ export const setSuccessCloneModal = (payload: {
   type: ActionTypes.SET_SUCCESS_CLONE_MODAL,
   payload,
 });
+export const setSuccessRemoveModal = (payload: {
+  isOpen: IModalsState['successRemoveModal']['isOpen'];
+  callBack?: IModalsState['successRemoveModal']['callBack'];
+}) => ({
+  type: ActionTypes.SET_SUCCESS_REMOVE_MODAL,
+  payload,
+});

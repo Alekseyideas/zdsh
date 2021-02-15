@@ -55,7 +55,9 @@ export const Card: React.FC<CardProps> = ({ isMy }) => {
   ]);
 
   const add = () => dispatch(addToMyR({ id: Number(id) }));
-  const remove = () => dispatch(removeFromMyR({ id: Number(id) }));
+  const remove = () => {
+    dispatch(removeFromMyR({ id: Number(id) }));
+  };
   const callTechniques = React.useCallback(() => {
     dispatch(getTechniquesR());
   }, [dispatch]);
@@ -81,6 +83,7 @@ export const Card: React.FC<CardProps> = ({ isMy }) => {
       callTechniques();
     }
   }, [Techniques.data.all, callTechniques, id]);
+
   React.useEffect(() => {
     if (Techniques.data.all[0]) {
       let methods: IMethod | null = null;
@@ -131,6 +134,7 @@ export const Card: React.FC<CardProps> = ({ isMy }) => {
     );
 
     const isIn = isInMy(Number(id), !!isMy, Techniques.data.my);
+
     bodyHtml = (
       <>
         <div className="d-flex mb-5" style={{ maxWidth: '900px' }}>
