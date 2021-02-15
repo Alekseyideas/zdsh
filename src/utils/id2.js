@@ -11,7 +11,7 @@ const generateID2 = (callback) => {
     const testKey =
       'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhcHBpZCI6MTA4MjYsImd1ZXN0a2V5IjoiMjE3ZDliMzRmMTEyNGNkZGE5ZTMxYjMzOWFjMTMyNmE5YTIzNTY4OTcyMDU0YmYxODc4NDdjYzg2YzZkMzY4ZSIsImV4cGlyZXMiOjE1OTgwNTE1OTJ9.WEfePO0QV9RkNUWHk9M0P4L4IBQvua154nNLMTiJ2GI';
     localStorage.setItem('token', testKey);
-    console.log("key", testKey);
+    console.log('key', testKey);
     return callback(testKey);
   }
   let usr = null;
@@ -54,7 +54,7 @@ const generateID2 = (callback) => {
 
   function onAuthButtonLoad() {
     window.ActionAuthButtonExternal.init({
-      appid: '10559',
+      appid: '14976',
       emid: publication_code,
       lang: 'ua',
       user: _user,

@@ -1,6 +1,8 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
+import { Header } from './components/Header';
+import { Menu } from './components/Menu';
 import { ErrorModal } from './components/Modals';
 import * as Pages from './pages';
 import { setUser } from './store/user/actions';
@@ -59,6 +61,8 @@ function App() {
   return (
     <>
       <div className="zdshApp">
+        <Header />
+        <Menu />
         <Switch>
           <Route exact path="/" component={Pages.Home} />
           <Route exact path={ROUTE_PATH.home} component={Pages.Home} />

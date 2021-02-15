@@ -6,6 +6,7 @@ import { COLORS } from '../utils/consts';
 interface Props {}
 
 export const Header = (props: Props) => {
+  console.log(11);
   return (
     <WrapperS>
       <div className="container">
