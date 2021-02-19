@@ -126,6 +126,7 @@ const LiS = styled.li`
   }
   span {
     color: rgba(0, 0, 0, 0.3);
+    padding: 7px 0;
   }
   &:hover {
     a.btn,
