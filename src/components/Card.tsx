@@ -8,7 +8,7 @@ import { Spinner } from '../components/Spinner';
 import { Button, FontIcon } from '../components/ui';
 import { AppState } from '../store/applicationState';
 import { addToMyR, getTechniquesR, removeFromMyR } from '../store/techniques/actions';
-import { IMethod } from '../store/techniques/types';
+import { IMethod, ITechniqe } from '../store/techniques/types';
 import { callApi } from '../utils/callApi';
 import { MAIN_BTNS, ROUTE_PATH } from '../utils/consts';
 import { isInMy } from '../utils/isMy';
@@ -31,7 +31,7 @@ enum IBtnNum {
   'remove' = 3,
 }
 export const Card: React.FC<CardProps> = ({ isMy }) => {
-  const { Techniques } = useSelector((store: AppState) => store);
+  const { Techniques, User } = useSelector((store: AppState) => store);
   const [body, setBody] = React.useState('');
   const [uri, setUri] = React.useState('');
   const [loading, setLoading] = React.useState(true);
@@ -64,13 +64,19 @@ export const Card: React.FC<CardProps> = ({ isMy }) => {
   }, [dispatch]);
 
   React.useEffect(() => {
-    getData();
+    if (User.data) {
+      getData();
+    }
+
     async function getData() {
       try {
         const data = await callApi('get', `/items/${id}`);
-        console.log(data);
-        setBody(data.html);
-        setUri(data.url);
+        if (User.data.error || (User.data.isDemo && !data.isdemo)) {
+          history.push('/');
+        } else {
+          setBody(data.html);
+          setUri(data.url);
+        }
       } catch (e) {
         const message = JSON.stringify(e);
         setError(message);
@@ -78,7 +84,7 @@ export const Card: React.FC<CardProps> = ({ isMy }) => {
         setLoading(false);
       }
     }
-  }, [id]);
+  }, [id, User.data, history]);
 
   React.useEffect(() => {
     if (!Techniques.data.all[0]) {
@@ -89,10 +95,12 @@ export const Card: React.FC<CardProps> = ({ isMy }) => {
   React.useEffect(() => {
     if (Techniques.data.all[0]) {
       let methods: IMethod | null = null;
+      let cat: ITechniqe['all'][0] | null = null;
       Techniques.data.all.forEach((t) => {
         if (!methods && t.methods && t.methods[0]) {
           t.methods.forEach((m) => {
             if (String(m.id) === String(id)) {
+              cat = t;
               methods = m;
             }
           });
@@ -103,10 +111,16 @@ export const Card: React.FC<CardProps> = ({ isMy }) => {
           oldC[0],
           oldC[1],
           {
-            title: methods?.title || '',
+            title: cat?.title || '',
             isLink: false,
             active: true,
             id: 3,
+          },
+          {
+            title: methods?.title || '',
+            isLink: false,
+            active: true,
+            id: 4,
           },
         ]);
     }

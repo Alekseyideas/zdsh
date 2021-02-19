@@ -25,7 +25,7 @@ export const AccordionItemLinks: React.FC<AccordionItemLinksProps> = ({
   onClick,
   isMy,
 }) => {
-  const { Techniques } = useSelector((store: AppState) => store);
+  const { Techniques, User } = useSelector((store: AppState) => store);
   const dispatch = useDispatch();
   const remove = (id: IMethod['id']) => dispatch(removeFromMyR({ id }));
   const add = (id: IMethod['id']) => dispatch(addToMyR({ id }));
@@ -63,15 +63,19 @@ export const AccordionItemLinks: React.FC<AccordionItemLinksProps> = ({
                   className="list-group-item d-flex justify-content-between align-items-center"
                   key={itm.id}
                 >
-                  <Link
-                    to={`${isMy ? ROUTE_PATH.myCards : ROUTE_PATH.techniques}/${itm.id}`}
-                    className="d-block"
-                  >
-                    {itm.title}
-                  </Link>
+                  {!User.data.isDemo || (User.data.isDemo && itm.isdemo) ? (
+                    <Link
+                      to={`${isMy ? ROUTE_PATH.myCards : ROUTE_PATH.techniques}/${itm.id}`}
+                      className="d-block"
+                    >
+                      {itm.title}
+                    </Link>
+                  ) : (
+                    <span className="d-block">{itm.title}</span>
+                  )}
 
                   <div className="d-flex align-items-center">
-                    {itm.url ? (
+                    {itm.url && (!User.data.isDemo || (User.data.isDemo && itm.isdemo)) ? (
                       <>
                         <ButtonLink
                           title={<FontIcon name={MAIN_BTNS[0].icon} />}
@@ -92,17 +96,19 @@ export const AccordionItemLinks: React.FC<AccordionItemLinksProps> = ({
                       </>
                     ) : null}
 
-                    {isInMy(itm.id, !!isMy, Techniques.data.my) ? (
-                      renderRemoveBtn(itm.id)
-                    ) : (
-                      <Button
-                        title={<FontIcon name={MAIN_BTNS[2].icon} />}
-                        onClick={() => add(itm.id)}
-                        isOutline
-                        type="secondary"
-                        tooltip={MAIN_BTNS[2].title}
-                      />
-                    )}
+                    {!User.data.isDemo || (User.data.isDemo && itm.isdemo) ? (
+                      isInMy(itm.id, !!isMy, Techniques.data.my) ? (
+                        renderRemoveBtn(itm.id)
+                      ) : (
+                        <Button
+                          title={<FontIcon name={MAIN_BTNS[2].icon} />}
+                          onClick={() => add(itm.id)}
+                          isOutline
+                          type="secondary"
+                          tooltip={MAIN_BTNS[2].title}
+                        />
+                      )
+                    ) : null}
                   </div>
                 </LiS>
               ))}
@@ -118,7 +124,9 @@ const LiS = styled.li`
   button {
     visibility: hidden;
   }
-
+  span {
+    color: rgba(0, 0, 0, 0.3);
+  }
   &:hover {
     a.btn,
     button {

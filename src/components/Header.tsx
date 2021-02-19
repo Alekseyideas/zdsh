@@ -3,10 +3,9 @@ import styled from 'styled-components';
 import srcLogo from '../assets/images/logo.png';
 import { COLORS } from '../utils/consts';
 
-interface Props {}
+// interface Props {}
 
-export const Header = (props: Props) => {
-  console.log(11);
+export const Header = React.memo(() => {
   return (
     <WrapperS>
       <div className="container">
@@ -22,7 +21,7 @@ export const Header = (props: Props) => {
       </div>
     </WrapperS>
   );
-};
+});
 
 const WrapperS = styled.header`
   position: fixed;

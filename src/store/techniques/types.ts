@@ -2,6 +2,7 @@ export interface IMethod {
   title: string;
   id: number;
   url: string;
+  isdemo: boolean;
 }
 
 export interface ITechniqe {

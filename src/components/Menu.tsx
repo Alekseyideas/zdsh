@@ -5,7 +5,7 @@ import { COLORS, ROUTE_PATH } from '../utils/consts';
 
 interface MenuProps {}
 
-export const Menu: React.FC<MenuProps> = () => {
+export const Menu: React.FC<MenuProps> = React.memo(() => {
   return (
     <WrapperS>
       <div className="container">
@@ -26,7 +26,7 @@ export const Menu: React.FC<MenuProps> = () => {
       </div>
     </WrapperS>
   );
-};
+});
 
 const WrapperS = styled.div`
   position: fixed;

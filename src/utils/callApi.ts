@@ -14,7 +14,7 @@ export async function callApi(
       method,
       headers: {
         'X-ACCESS-TOKEN': token,
-      },
+      }, 
       url: url + path,
       data: data ? JSON.stringify(data) : null,
     });

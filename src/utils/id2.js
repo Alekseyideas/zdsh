@@ -77,7 +77,7 @@ const generateID2 = (callback) => {
       const ntk = window.ActionAuthButtonExternal.getTokenValue();
       // console.log('onUserChange tk: ', tk);
       if (ntk) {
-        // console.log('ntk: ', ntk);
+        console.log('ntk: ', ntk);
         localStorage.setItem('token', ntk);
         callback(ntk);
       }

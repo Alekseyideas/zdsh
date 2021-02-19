@@ -13,7 +13,7 @@ function* getTechniques() {
     const message = JSON.stringify(e);
     yield put(setErrorModal({ message, isOpen: true }));
     yield put(actions.getTechniquesE());
-  } finally {
+  } finally { 
   }
 }
 
